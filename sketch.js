@@ -5,7 +5,7 @@ var pathImg,mainRacerImg1,mainRacerImg2;
 var oppPink1Img,oppPink2Img;
 var oppYellow1Img,oppYellow2Img;
 var oppRed1Img,oppRed2Img;
-var gameOverImg,cycleBell;
+var gameOverImg,fellSound,clickSound;
 var obs1,ob2,ob3;
 var obs1Img,obs2Img,obs3Img;
 
@@ -36,8 +36,9 @@ function preload(){
   obs2Img = loadImage("obstacle2.png");
   obs3Img = loadImage("obstacle3.png");
   
-  cycleBell = loadSound("bell.mp3");
+  fellSound = loadSound("fall.wav");
   gameOverImg = loadImage("gameOver.png");
+  clickSound = loadSound("click.wav");
 }
 
 function setup(){
@@ -99,9 +100,7 @@ function draw() {
   }
   
     //code to play cycle bell sound
-  if(keyDown("space")) {
-    cycleBell.play();
-  }
+
   
   //creating continous opponent players
   var select = Math.round(random(1,6));
@@ -151,33 +150,39 @@ function draw() {
      gameState = END;
      player1.velocityY = 0;
      player1.addAnimation("opponentPlayer1",oppPink2Img);
+     fellSound.play();
     }
     
     if(yellowCG.isTouching(mainCyclist)){
       gameState = END;
       player2.velocityY = 0;
       player2.addAnimation("opponentPlayer2",oppYellow2Img);
+      fellSound.play();
     }
     
     if(redCG.isTouching(mainCyclist)){
       gameState = END;
       player3.velocityY = 0;
       player3.addAnimation("opponentPlayer3",oppRed2Img);
+      fellSound.play();
     }
     
     if(barradeG.isTouching(mainCyclist)){
       gameState = END;
       obs1.velocityY = 0;
+      fellSound.play();
     }
 
     if(pitholeG.isTouching(mainCyclist)){
       gameState = END;
       obs2.velocityY = 0;
+      fellSound.play();
     }
 
     if(ScrewG.isTouching(mainCyclist)){
       gameState = END;
       obs3.velocityY = 0;
+      fellSound.play();
     }
 
 }else if (gameState === END) {
@@ -223,6 +228,7 @@ function draw() {
 
     if(keyDown("UP_ARROW")) {
        reset();
+       clickSound.play();
      }
 }
 }
